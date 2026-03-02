@@ -58,6 +58,14 @@
   <div class="card-body">
     <h5 class="card-title">Casa 220m²</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="form-check mb-2">
+      <input class="form-check-input item-produto" type="checkbox" value="250000.00" id="item-casa">
+      <label class="form-check-label" for="item-casa">Selecionar (R$ 250.000,00)</label>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Quantidade</label>
+      <input type="number" class="form-control qtd-produto" value="1" min="1">
+    </div>
     <a href="#" class="btn btn-primary">Comprar</a>
   </div>
 </div>
@@ -69,6 +77,14 @@
   <div class="card-body">
     <h5 class="card-title">Civic 2016</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="form-check mb-2">
+      <input class="form-check-input item-produto" type="checkbox" value="45000.00" id="item-civic">
+      <label class="form-check-label" for="item-civic">Selecionar (R$ 45.000,00)</label>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Quantidade</label>
+      <input type="number" class="form-control qtd-produto" value="1" min="1">
+    </div>
     <a href="#" class="btn btn-primary">Comprar</a>
   </div>
 </div>
@@ -81,10 +97,25 @@
   <div class="card-body">
     <h5 class="card-title">Sítio 1000m²</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="form-check mb-2">
+      <input class="form-check-input item-produto" type="checkbox" value="150000.00" id="item-sitio">
+      <label class="form-check-label" for="item-sitio">Selecionar (R$ 150.000,00)</label>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Quantidade</label>
+      <input type="number" class="form-control qtd-produto" value="1" min="1">
+    </div>
     <a href="#" class="btn btn-primary">Comprar</a>
   </div>
 </div>
     </div>
+  </div>
+</div>
+
+<!-- Contêiner do Valor Total -->
+<div class="container mt-4">
+  <div class="alert alert-info text-center">
+    <h4>Valor Total: R$ <span id="valor-total">0,00</span></h4>
   </div>
 </div>
 
