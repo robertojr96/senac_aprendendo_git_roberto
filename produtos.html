@@ -44,6 +44,7 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <a href="carrinho.html" class="btn btn-warning ms-2">🛒 Carrinho (<span id="nav-qtd">0</span>)</a>
     </div>
   </div>
 </nav>
@@ -67,6 +68,7 @@
       <input type="number" class="form-control qtd-produto" value="1" min="1">
     </div>
     <a href="#" class="btn btn-primary">Comprar</a>
+    <button class="btn btn-success mt-1" onclick="adicionarAoCarrinho('item-casa', 'Casa 220m²', 250000.00, this)">Adicionar ao Carrinho</button>
   </div>
 </div>
 
@@ -86,11 +88,11 @@
       <input type="number" class="form-control qtd-produto" value="1" min="1">
     </div>
     <a href="#" class="btn btn-primary">Comprar</a>
+    <button class="btn btn-success mt-1" onclick="adicionarAoCarrinho('item-civic', 'Civic 2016', 45000.00, this)">Adicionar ao Carrinho</button>
   </div>
 </div>
     </div>
     <div class="col">
-     
 
 <div class="card" style="width: 18rem;">
   <img src="./img/sitio.jpg" class="card-img-top" alt="...">
@@ -106,6 +108,7 @@
       <input type="number" class="form-control qtd-produto" value="1" min="1">
     </div>
     <a href="#" class="btn btn-primary">Comprar</a>
+    <button class="btn btn-success mt-1" onclick="adicionarAoCarrinho('item-sitio', 'Sítio 1000m²', 150000.00, this)">Adicionar ao Carrinho</button>
   </div>
 </div>
     </div>
@@ -119,5 +122,31 @@
   </div>
 </div>
 <script src="script.js"></script>
+<script>
+  function adicionarAoCarrinho(id, nome, preco, btn) {
+    const card = btn.closest('.card');
+    const qtd = parseInt(card.querySelector('.qtd-produto').value) || 1;
+
+    let carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+    const existente = carrinho.find(i => i.id === id);
+    if (existente) {
+      existente.qtd += qtd;
+    } else {
+      carrinho.push({ id, nome, preco, qtd });
+    }
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+    atualizarContadorNav();
+    alert(qtd + 'x ' + nome + ' adicionado ao carrinho!');
+  }
+
+  function atualizarContadorNav() {
+    const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+    const total = carrinho.reduce((s, i) => s + i.qtd, 0);
+    document.getElementById('nav-qtd').textContent = total;
+  }
+
+  atualizarContadorNav();
+</script>
 </body>
 </html>
