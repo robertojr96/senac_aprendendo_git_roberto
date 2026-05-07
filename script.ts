@@ -1,24 +1,35 @@
-function formatarPreco(valor) {
+interface CartItem {
+  title: string;
+  qtd: number;
+  price: number;
+  subtotal: number;
+}
+
+function formatarPreco(valor: number): string {
   return valor.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 }
 
-function atualizarCarrinho() {
-  const checkboxes = document.querySelectorAll(".item-produto");
+function atualizarCarrinho(): void {
+  const checkboxes =
+    document.querySelectorAll<HTMLInputElement>(".item-produto");
   let total = 0;
   let quantidadeTotal = 0;
-  const carrinho = [];
+  const carrinho: CartItem[] = [];
 
   checkboxes.forEach((cb) => {
     if (!cb || !cb.checked) return;
     const card = cb.closest(".card");
-    const qtdInput = card ? card.querySelector(".qtd-produto") : null;
+    const qtdInput = card
+      ? card.querySelector<HTMLInputElement>(".qtd-produto")
+      : null;
     const qtd = qtdInput ? Number(qtdInput.value) || 1 : 1;
     const price = parseFloat(cb.value) || 0;
     const title = card
-      ? card.querySelector(".card-title").textContent
+      ? (card.querySelector(".card-title") as HTMLElement)?.textContent ||
+        "Produto"
       : "Produto";
     const subtotal = price * qtd;
     total += subtotal;
@@ -35,7 +46,7 @@ function atualizarCarrinho() {
     outTotal.textContent = formatarPreco(total);
   }
   if (badge) {
-    badge.textContent = quantidadeTotal;
+    badge.textContent = quantidadeTotal.toString();
   }
   if (summary) {
     if (carrinho.length === 0) {
@@ -62,7 +73,9 @@ function atualizarCarrinho() {
 
 document.addEventListener("DOMContentLoaded", () => {
   atualizarCarrinho();
-  const controls = document.querySelectorAll(".item-produto, .qtd-produto");
+  const controls = document.querySelectorAll<HTMLInputElement>(
+    ".item-produto, .qtd-produto",
+  );
   controls.forEach((el) => {
     el.addEventListener("change", atualizarCarrinho);
     el.addEventListener("input", atualizarCarrinho);

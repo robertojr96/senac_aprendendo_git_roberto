@@ -1,8 +1,12 @@
-// main.js — arquivo principal: importa módulos e registra Event Listeners (Passo 21)
+// main.ts — arquivo principal: importa módulos e registra Event Listeners (Passo 21)
 
 import "./scss/style.scss";
-import { carregarDepoimentos, enviarFormulario } from "./api.js";
-import { renderizarDepoimentos, exibirAlertaForm } from "./ui.js";
+import { carregarDepoimentos, enviarFormulario } from "./api";
+import {
+  renderizarDepoimentos,
+  exibirAlertaForm,
+  preencherEndereco,
+} from "./ui";
 
 // Passo 18: carregar depoimentos na home
 const listaDepoimentos = document.getElementById("lista-depoimentos");
@@ -16,11 +20,15 @@ if (listaDepoimentos) {
 }
 
 // Passo 20: envio do formulário de contato via POST
-const btnEnviar = document.getElementById("btn-enviar");
+const btnEnviar = document.getElementById(
+  "btn-enviar",
+) as HTMLButtonElement | null;
 // Busca de endereço pelo CEP
-const campoCep = document.getElementById("campo-cep");
+const campoCep = document.getElementById(
+  "campo-cep",
+) as HTMLInputElement | null;
 if (campoCep) {
-  campoCep.addEventListener("input ", async () => {
+  campoCep.addEventListener("input", async () => {
     const cep = campoCep.value.replace(/\D/g, "");
     if (cep.length !== 8) return;
 
@@ -28,18 +36,19 @@ if (campoCep) {
     const dados = await resposta.json();
 
     if (!dados.erro) {
-      document.getElementById("campo-rua").value = dados.logradouro;
-      document.getElementById("campo-bairro").value = dados.bairro;
-      document.getElementById("campo-cidade").value = dados.localidade;
-      document.getElementById("campo-estado").value = dados.uf;
+      preencherEndereco(dados);
     }
   });
 }
 if (btnEnviar) {
   btnEnviar.addEventListener("click", async () => {
-    const nome = document.getElementById("campo-nome").value;
-    const email = document.getElementById("campo-email").value;
-    const mensagem = document.getElementById("campo-mensagem").value;
+    const nome = (document.getElementById("campo-nome") as HTMLInputElement)
+      .value;
+    const email = (document.getElementById("campo-email") as HTMLInputElement)
+      .value;
+    const mensagem = (
+      document.getElementById("campo-mensagem") as HTMLTextAreaElement
+    ).value;
     const feedbackContainer = document.getElementById("feedback-form");
 
     try {
@@ -52,10 +61,10 @@ if (btnEnviar) {
 }
 
 // Troca de temas
-document.querySelectorAll("[data-theme]").forEach((link) => {
+document.querySelectorAll<HTMLElement>("[data-theme]").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    const theme = e.target.getAttribute("data-theme");
-    document.body.className = theme === "default" ? "" : theme;
+    const theme = (e.target as HTMLElement).getAttribute("data-theme");
+    document.body.className = theme === "default" ? "" : theme || "";
   });
 });

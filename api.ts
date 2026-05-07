@@ -1,6 +1,12 @@
-// api.js — funções de comunicação com a internet (Passos 18 e 20)
+// api.ts — funções de comunicação com a internet (Passos 18 e 20)
 
-export async function carregarDepoimentos() {
+interface Depoimento {
+  name: string;
+  site: string;
+  body: string;
+}
+
+export async function carregarDepoimentos(): Promise<Depoimento[]> {
   return [
     {
       name: "Mariana Silva",
@@ -20,7 +26,11 @@ export async function carregarDepoimentos() {
   ];
 }
 
-export async function enviarFormulario(nome, email, mensagem) {
+export async function enviarFormulario(
+  nome: string,
+  email: string,
+  mensagem: string,
+): Promise<Response> {
   const corpo = JSON.stringify({
     title: nome,
     body: mensagem,
