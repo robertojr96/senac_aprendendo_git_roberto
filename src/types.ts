@@ -6,7 +6,7 @@ export interface Product {
   image: string;
 }
 
-export type CartState = Record<string, number>;
+export type CartState = { [key: string]: number };
 
 export interface Depoimento {
   name: string;
